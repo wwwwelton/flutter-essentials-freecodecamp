@@ -11,6 +11,7 @@
 | Course Post | https://www.freecodecamp.org/news/flutter-app-course-mobile-web-desktop/ |
 | Flutter documentation | https://docs.flutter.dev/ |
 | Install Chrome WSL2 | https://scottspence.com/posts/use-chrome-in-ubuntu-wsl |
+| Do you need to use the "new" keyword in Dart? | https://stackoverflow.com/questions/50091389/do-you-need-to-use-the-new-keyword-in-dart |
 
 ### Temp block
 ```code
