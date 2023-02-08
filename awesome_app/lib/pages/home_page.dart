@@ -1,6 +1,7 @@
 import 'package:awesome_app/drawer.dart';
-import 'package:awesome_app/name_card_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,16 +11,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var myText = "Change my Name";
+  // var myText = "Change my Name";
   // underscore "_" mean the attribute is private "_nameController"
   // in dart we don't need to use new keyword " = new TextEditingController();"
-  TextEditingController _nameController = TextEditingController();
+  // TextEditingController _nameController = TextEditingController();
+
+  var url = "https://jsonplaceholder.typicode.com/photos";
+  var data;
 
   // called before build, before building the widget
-  // @override
-  // void initState() {
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  fetchData() async {
+    var res = await http.get(Uri.parse(url));
+    data = jsonDecode(res.body);
+    setState(() {});
+  }
 
   // called after widget build, similitar to return in react
   // @override
@@ -34,20 +45,16 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text("Awesome App"),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SingleChildScrollView(
-            child:
-                NameCardWidget(myText: myText, nameController: _nameController),
-          ),
-        ),
-      ),
+      body: data != null
+          ? Container(
+              color: Colors.blue,
+            )
+          : Center(child: CircularProgressIndicator()),
       drawer: MyDrawer(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          myText = _nameController.text;
-          setState(() {});
+          // myText = _nameController.text;
+          // setState(() {});
         },
         child: Icon(Icons.send),
       ),
