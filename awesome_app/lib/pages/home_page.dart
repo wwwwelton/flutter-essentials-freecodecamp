@@ -46,8 +46,15 @@ class _HomePageState extends State<HomePage> {
         title: const Text("Awesome App"),
       ),
       body: data != null
-          ? Container(
-              color: Colors.blue,
+          ? ListView.builder(
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(data[index]["title"]),
+                  subtitle: Text("ID: ${data[index]["id"]}"),
+                  leading: Image.network(data[index]["url"]),
+                );
+              },
+              itemCount: data.length,
             )
           : Center(child: CircularProgressIndicator()),
       drawer: MyDrawer(),
