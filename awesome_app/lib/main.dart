@@ -7,8 +7,30 @@ void main() {
   ));
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  var myText = "Change my Name";
+  // underscore "_" mean the attribute is private "_nameController"
+  // in dart we don't need to use new keyword " = new TextEditingController();"
+  TextEditingController _nameController = TextEditingController();
+
+  // called before build, before building the widget
+  // @override
+  // void initState() {
+  //   super.initState();
+  // }
+
+  // called after widget build, similitar to return in react
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +50,7 @@ class HomePage extends StatelessWidget {
                   height: 20,
                 ),
                 Text(
-                  "Change my name",
+                  myText,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
@@ -37,6 +59,7 @@ class HomePage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: TextField(
+                    controller: _nameController,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: "Enter Some Text",
@@ -76,7 +99,10 @@ class HomePage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          myText = _nameController.text;
+          setState(() {});
+        },
         child: Icon(Icons.send),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
