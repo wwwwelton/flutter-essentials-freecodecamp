@@ -1,24 +1,31 @@
+import 'package:awesome_app/pages/home_page.dart';
+import 'package:awesome_app/pages/home_page_with_fb.dart';
+import 'package:awesome_app/pages/login_page.dart';
+import 'package:awesome_app/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(MaterialApp(
-    home: const HomePage(),
-    theme: ThemeData(primarySwatch: Colors.purple),
-  ));
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Constants.prefs = await SharedPreferences.getInstance();
+  runApp(const MyApp());
 }
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Awesome App"),
-      ),
-      body: Container(
-        child: const Text("Hi Flutter"),
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Constants.prefs?.getBool("loggedIn") == true
+          ? HomePageFB()
+          : LoginPage(),
+      theme: ThemeData(primarySwatch: Colors.purple),
+      routes: {
+        LoginPage.routeName: (context) => LoginPage(),
+        HomePage.routeName: (context) => HomePageFB(),
+      },
     );
   }
 }
